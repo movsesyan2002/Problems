@@ -97,5 +97,58 @@ class Program {
             new Group("Game Dev Group 1", 20, courses[3]),   // Unity Game Development
             new Group("Game Dev Group 2", 18, courses[4])    // Unreal Game Development
         };
+    
+
+        Console.WriteLine($"Count of Web student is {CountWeb(groups)}");
+        Console.WriteLine($"All amount of Unreal student is {Amount(groups)}");
+        PopularCourse(groups);
+    }
+    static int CountWeb(Group[] groups) {
+        
+        int count = 0;
+        
+        foreach (Group group in groups) {
+            if (group.CourseName is Web) {
+                count += group.StudentCount;
+            }
+        }
+
+        return count;
+    }
+
+    static int Amount(Group[] groups) {
+        int amount = 0;
+
+        foreach (Group group in groups)
+        {
+            
+            if (group.CourseName is Game) {
+                Game x = (Game)group.CourseName;
+                
+                if (string.Compare(x.Engine,"Unreal",true) == 0) {
+                    amount += group.StudentCount * x.MonthlyPayment;
+                }
+            }
+        }   
+
+        return amount;
+    }
+
+    static void PopularCourse(Group[] groups) {
+        int max = 0;
+        foreach (Group group in groups)
+        {
+            if (max < group.StudentCount) {
+                max = group.StudentCount;
+            }
+        }
+
+        foreach (Group group in groups)
+        {
+            if (max == group.StudentCount) {
+                Console.WriteLine($"{group.GroupName} and count students is {group.StudentCount}");
+                break;
+            }
+        }
     }
 }
